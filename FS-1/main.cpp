@@ -4,8 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define BUFFER_SIZE 80
-char buffer [BUFFER_SIZE];
+#define BUFFER_SIZE 16
 
 int main(int argc, char** argv){
     if (argc < 2) {
@@ -19,6 +18,8 @@ int main(int argc, char** argv){
         std::cerr << strerror(errno) << std::endl;
         exit(errno);
     }
+
+    char* buffer = (char*)malloc(BUFFER_SIZE);
     
     while (true) {
         int readBytes = read(fileDescriptor, buffer, BUFFER_SIZE);
@@ -42,5 +43,6 @@ int main(int argc, char** argv){
         exit(errno);
     }    
     
+    free(buffer);
     return 0;
 }
